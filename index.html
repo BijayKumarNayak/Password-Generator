@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+    
+        <img src="bg2.jpg" alt="" class="h-screen w-screen object-cover object-center absolute top-0 left-0 ">
+        <div
+            class="m-auto w-full h-full md:w-1/2 p-4 bg-gradient-to-b from-slate-700 to-slate-800 text-white flex flex-col gap-3 drop-shadow-lg ">
+
+
+            <h1 class="font-bold text-lg text-center">Password Generator</h1>
+            <div class="text-center">
+                <input type="text" id="password" readonly class="text-black">
+
+            </div>
+            <div class="flex items-center justify-between"> <button class="p-2 bg-blue-500 hover:bg-blue-600 rounded"
+                    onclick="generatePassword()">Generate Password</button>
+                <button class="p-2 bg-blue-500 hover:bg-blue-600 rounded" onclick="copyToClipboard()" id="copyBtn"
+                    disabled>Copy to
+                    Clipboard</button>
+            </div>
+            <div class="flex items-center justify-between font-bold ">
+                <label for="length">Password Length:</label>
+                <input type="number" id="length" min="6" max="30" value="12" class="text-black">
+            </div>
+            <div class="flex items-center justify-between font-bold">
+                <label for="uppercase">Include Uppercase:</label>
+                <input type="checkbox" id="uppercase" checked>
+            </div>
+            <div class="flex items-center justify-between font-bold">
+                <label for="lowercase">Include Lowercase:</label>
+                <input type="checkbox" id="lowercase" checked>
+            </div>
+            <div class="flex items-center justify-between font-bold">
+                <label for="numbers">Include Numbers:</label>
+                <input type="checkbox" id="numbers" checked>
+            </div>
+            <div class="flex items-center justify-between font-bold">
+                <label for="symbols">Include Symbols:</label>
+                <input type="checkbox" id="symbols" checked>
+            </div>
+
+        </div>
+ 
+
+
+
+    <script>
+        function generatePassword() {
+            const length = document.getElementById("length").value;
+            const uppercase = document.getElementById("uppercase").checked;
+            const lowercase = document.getElementById("lowercase").checked;
+            const numbers = document.getElementById("numbers").checked;
+            const symbols = document.getElementById("symbols").checked;
+
+            const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+            const numberChars = "0123456789";
+            const symbolChars = "!@#$%^&*()_-+=<>?/[]{}|";
+
+            let chars = "";
+
+            if (uppercase) chars += uppercaseChars;
+            if (lowercase) chars += lowercaseChars;
+            if (numbers) chars += numberChars;
+            if (symbols) chars += symbolChars;
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * chars.length);
+                password += chars.charAt(randomIndex);
+            }
+
+            document.getElementById("password").value = password;
+            document.getElementById("copyBtn").disabled = false;
+        }
+
+        function copyToClipboard() {
+            const passwordField = document.getElementById("password");
+            passwordField.select();
+            document.execCommand("copy");
+            alert("Password copied to clipboard!");
+        }
+    </script>
+</body>
+
+</html>
